@@ -1,4 +1,4 @@
-# Glass-oo
+# GlassWorks
 
 A website where one can find some superb glass products across the globe especially from the heart of Bangle city, Firozabad.
 
