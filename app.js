@@ -19,7 +19,7 @@ const User = require('./models/user');
 const userRoutes = require('./routes/users');
 const glasss = require('./routes/glasss');
 const reviews = require("./routes/reviews");
-const dbUrl = process.env.dbUrl /*|| 'mongodb://localhost:27017/glass-works'*/;
+const dbUrl = process.env.dbUrl || 'mongodb://localhost:27017/glass-works';
 
 
 
