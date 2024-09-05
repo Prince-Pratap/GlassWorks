@@ -3,7 +3,7 @@
 A website where one can find some superb glass products across the globe especially from the heart of Bangle city, Firozabad.
 
 ## View Live App
-[On Heroku](https://fierce-island-11656.herokuapp.com/)
+[On Render](https://glassworks.onrender.com/)
 
 ## Tech Stack:
   ### Back-end
