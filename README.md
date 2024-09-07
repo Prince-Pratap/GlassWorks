@@ -12,7 +12,7 @@ A website where one can find some superb glass products across the globe especia
    * ExpressJS - Back-end web application framework running on top of NodeJS
    * Passport - For user authentication strategies
    * Cloudinary - For image hosting
-   * Mapbox - For map rendering
+   * Maptiler - For map rendering
   
   ### Middle-Ware 
    * mongoose - ODM (Object Data Modelling) for MongoDB
@@ -31,11 +31,11 @@ npm i
 ```
 
 ## .env
-  * DB_URL
-  * CLOUDINARY_CLOUD_NAME
-  * CLOUDINARY_KEY
-  * CLOUDINARY_SECRET
-  * MAPBOX_TOKEN
+  * dbUrl
+  * cloud_name
+  * api_key
+  * api_secret
+  * MAPTILER_API_KEY
 
 
 ## Usage
