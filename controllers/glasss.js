@@ -4,43 +4,18 @@ const maptilerClient = require("@maptiler/client");
 maptilerClient.config.apiKey = process.env.MAPTILER_API_KEY;
 
 module.exports.index = async (req, res) => {
-    const glasss = await Glass.find({});
-    res.render('glasss/index', { glasss });
+    try {
+        const glasss = await Glass.find({ isVerified: true });
+        res.render('glasss/index', { glasss });
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
 }
 
 module.exports.renderNewForm = (req, res) => {
 
     res.render('glasss/new');
 };
-
-// module.exports.createGlass = async (req, res, next) => {
-//     // const geoData = await maptilerClient.geocoding.forward(req.body.campground.location, { limit: 1 });
-//     // //res.send(geoData.body.features[0].geometry.coordinates);
-//     // const glass = new Glass(req.body.glass);
-//     // glass.geometry = geoData.features[0].geometry;
-//     // glass.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
-//     // glass.author = req.user._id;
-
-//     // await glass.save();
-//     // req.flash('success', 'Successfully added a new product!');
-//     // res.redirect(`/glasss/${glass._id}`);
-//     try {
-//         const geoData = await maptilerClient.geocoding.forward(req.body.campground.location, { limit: 1 });
-//         const glass = new Glass(req.body.glass);
-//         glass.geometry = geoData.features[0].geometry;
-//         glass.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
-//         glass.author = req.user._id;
-
-//         await glass.save();
-//         req.flash('success', 'Successfully added a new product!');
-//         res.redirect(`/glasss/${glass._id}`);
-
-//     } catch (error) {
-//         console.error(error); // Log the error for debugging
-//         req.flash('error', 'Oops, something went wrong! Please check the product details and try again.');
-//         res.redirect('/glasss/new'); // Redirect to product creation form
-//     }
-// };
 module.exports.createGlass = async (req, res, next) => {
     try {
         // Check if the glass object and location are present in the request body
@@ -76,8 +51,35 @@ module.exports.createGlass = async (req, res, next) => {
         res.redirect('/glasss/new');
     }
 };
-
-
+//pending request route
+module.exports.getPendingProducts = async (req, res) => {
+    try {
+        const pendingProducts = await Glass.find({ isVerified: false });
+        res.render('glasss/pending', { pendingProducts });
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
+// verify product admin only
+module.exports.verifyProduct = async (req, res) => {
+    try {
+        const glass = await Glass.findById(req.params.id);
+        glass.isVerified = true;
+        await glass.save();
+        res.redirect('/glasss/pending');
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
+// Delete a product admin only
+module.exports.deleteProduct = async (req, res) => {
+    try {
+        await Glass.findByIdAndDelete(req.params.id);
+        res.redirect('/glasss/pending');
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
 module.exports.showGlass = async (req, res) => {
     const glass = await Glass.findById(req.params.id).populate({
         path: 'reviews',
