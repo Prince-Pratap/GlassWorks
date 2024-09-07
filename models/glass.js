@@ -30,6 +30,10 @@ const GlassSchema= new Schema({
      description: String,
      address: String,
      location: String,
+     isVerified: {
+          type: Boolean,
+          default: false
+     },
      author:{
           type: Schema.Types.ObjectId,
           ref:'User'
