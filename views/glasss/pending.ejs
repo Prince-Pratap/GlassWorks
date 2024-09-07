@@ -1,0 +1,54 @@
+<% layout('layouts/boilerplate') %>
+
+    <div class="container mt-4">
+        <h1>Pending Glass Products</h1>
+
+        <% if(pendingProducts.length===0) { %>
+            <div class="alert alert-info">
+                No pending products to verify.
+            </div>
+            <% } %>
+
+                <% for (let glass of pendingProducts) { %>
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <% if (glass.images.length) { %>
+                                    <img class="img-fluid" src="<%= glass.images[0].url %>" alt="<%= glass.title %>">
+                                    <% } else { %>
+                                        <img class="img-fluid" src="" alt="<%= glass.title %>">
+                                        <% } %>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <%= glass.title %>
+                                    </h5>
+                                    <p class="card-text">
+                                        <%= glass.description %>
+                                    </p>
+                                    <p class="card-text">
+                                        <small class="text-muted">Location: <%= glass.location %></small>
+                                    </p>
+                                    <p class="card-text">
+                                        <small class="text-muted">Price: Rs <%= glass.price %></small>
+                                    </p>
+                                    <p class="card-text">
+                                        <small class="text-muted">Posted by: <a href="mailto:<%= glass.author.email %>">
+                                                <%= glass.author.username %>
+                                            </a></small>
+                                    </p>
+                                    <div class="d-flex">
+                                        <form action="/glasss/<%= glass._id %>/verify?_method=PUT" method="POST">
+                                            <button class="btn btn-success me-2">Verify</button>
+                                        </form>
+                                        <form action="/glasss/<%= glass._id %>?_method=DELETE" method="POST">
+                                            <button class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+    </div>
